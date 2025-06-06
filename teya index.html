@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Good Luck, Noreene Thea Eijansantos!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffb6c1 0%, #ffe4e1 100%);
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #c2185b;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .centered {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
+    .bouquet {
+      width: 180px;
+      height: 220px;
+      margin-bottom: 18px;
+      transition: transform 1.2s cubic-bezier(.68,-0.25,.27,1.35), opacity 1s;
+      z-index: 2;
+    }
+    .bouquet.hide {
+      transform: translateX(-600px) rotate(-40deg) scale(0.7);
+      opacity: 0;
+    }
+    .bible-verse {
+      font-size: 1.08rem;
+      color: #ad1457;
+      background: #fff8fa;
+      border-left: 6px solid #e75480;
+      padding: 14px 22px 14px 18px;
+      border-radius: 12px;
+      margin: 0 0 32px 0;
+      max-width: 400px;
+      box-shadow: 0 2px 8px #e7548027;
+      text-align: center;
+    }
+    .bible-verse strong {
+      color: #d81b60;
+      font-weight: 600;
+    }
+    .reveal-btn, .next-btn {
+      font-size: 1.2rem;
+      background: #e75480;
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 28px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 20px #e7548077;
+      transition: background 0.2s, transform 0.2s;
+      margin-bottom: 16px;
+      z-index: 2;
+      margin-top: 24px;
+    }
+    .reveal-btn:hover, .next-btn:hover { background: #c2185b; transform: scale(1.07); }
+    .main-content {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(40px);
+      transition: opacity 1s, transform 1s;
+      max-width: 520px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 24px;
+      box-shadow: 0 6px 32px 0 rgba(220,70,120,0.13);
+      padding: 32px 18px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      display: none;
+    }
+    .main-content.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      display: block;
+      animation: fadeInUp 1.2s;
+    }
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(40px);}
+      to   { opacity:1; transform:translateY(0);}
+    }
+    .photo {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 6px solid #ffb6c1;
+      margin: 0 auto 18px;
+      box-shadow: 0 2px 22px #e7548040;
+      background: #fff;
+      display: block;
+    }
+    .hearts {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      user-select: none;
+      animation: hearts-float 2.5s infinite alternate ease-in-out;
+    }
+    @keyframes hearts-float {
+      0% { transform: scale(1) translateY(0); }
+      100% { transform: scale(1.08) translateY(-10px);}
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #e75480;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 12px #fff6;
+    }
+    .quote {
+      font-size: 1.08rem;
+      color: #ad1457;
+      background: #ffe4f8;
+      border-left: 4px solid #e75480;
+      padding: 16px 18px;
+      border-radius: 10px;
+      margin: 22px 0;
+      min-height: 56px;
+      transition: background 0.5s;
+    }
+    .qualities {
+      margin: 18px 0;
+      text-align: left;
+      padding: 0 10px;
+    }
+    .qualities h3 {
+      color: #d81b60;
+      margin-bottom: 8px;
+    }
+    .qualities ul {
+      padding-left: 24px;
+      color: #ad1457;
+    }
+    .personal-message {
+      margin: 22px 0 8px;
+      font-size: 1.1rem;
+      background: #fff8fa;
+      border-radius: 10px;
+      padding: 14px 18px;
+      color: #b71c1c;
+      border: 1.5px dashed #ffb6c1;
+    }
+    .goodluck {
+      font-size: 1.15rem;
+      background: #ffe4e1;
+      color: #c2185b;
+      margin: 16px 0 20px 0;
+      padding: 14px 18px;
+      border-radius: 10px;
+      border-left: 5px solid #e75480;
+      font-weight: 500;
+    }
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      top: 0; left: 0;
+      z-index: 999;
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .main-content { padding: 14px 2vw; }
+      .photo { width: 90px; height: 90px; }
+      h1 { font-size: 1.1rem; }
+      .bible-verse { font-size: .95rem; padding: 12px 5vw; }
+    }
+  </style>
+</head>
+<body>
+  <canvas class="confetti"></canvas>
+  <!-- Landing Page -->
+  <div class="centered" id="landing">
+    <svg class="bouquet" id="bouquet" viewBox="0 0 160 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="80" cy="160" rx="60" ry="48" fill="#ffe4e1"/>
+      <ellipse cx="45" cy="55" rx="21" ry="22" fill="#fb7291"/>
+      <ellipse cx="115" cy="60" rx="22" ry="22" fill="#ee95b5"/>
+      <ellipse cx="70" cy="33" rx="18" ry="20" fill="#ffb6c1"/>
+      <ellipse cx="110" cy="30" rx="15" ry="17" fill="#f06292"/>
+      <ellipse cx="84" cy="59" rx="15" ry="15" fill="#fff"/>
+      <ellipse cx="92" cy="45" rx="16" ry="16" fill="#f8bbd0"/>
+      <rect x="77" y="70" width="7" height="70" rx="4" fill="#81c784"/>
+      <rect x="90" y="70" width="7" height="70" rx="4" fill="#388e3c"/>
+      <rect x="60" y="70" width="7" height="70" rx="4" fill="#43a047"/>
+      <polygon points="45,160 115,160 80,210" fill="#fff" stroke="#d7ccc8" stroke-width="2"/>
+      <ellipse cx="80" cy="170" rx="22" ry="12" fill="#ffe4e1" opacity="0.6"/>
+    </svg>
+    <div class="bible-verse">
+      <strong>James 1:5</strong><br>
+      “If any of you lacks wisdom, let him ask of God, who gives to all liberally and without reproach, and it will be given to him.”
+    </div>
+    <button class="reveal-btn" id="startBtn">Start</button>
+  </div>
+  <!-- Motivational Page -->
+  <div class="main-content" id="motivationalPage">
+    <div class="hearts" aria-label="Hearts">💖💗💞</div>
+    <img src="teya.jpg" alt="Your Photo Together" class="photo" id="photo1">
+    <h1>YOU GOT THIS BABY!!</h1>
+    <div class="quote" id="quote-box">
+      <!-- Quotes will appear here -->
+    </div>
+    <button class="next-btn" id="toAmazing">Next</button>
+  </div>
+  <!-- Amazing Page -->
+  <div class="main-content" id="amazingPage">
+    <div class="hearts">💖💗💞</div>
+    <img src="teya.jpg" alt="Your Photo Together" class="photo" id="photo2">
+    <h1>You're Amazing</h1>
+    <div class="qualities">
+      <h3>Here are the reason why:</h3>
+      <ul>
+        <li>You never give up, no matter the challenge.</li>
+        <li>Your dedication inspires everyone around you(especially me).</li>
+        <li>You face every challenges with a brave soul.</li>
+        <li>You always put effort in everything you do.</li>
+        <li>You always strive to be your best self—inside and out!</li>
+      </ul>
+    </div>
+    <button class="next-btn" id="toGoodLuck">Next</button>
+  </div>
+  <!-- Good Luck Page -->
+  <div class="main-content" id="goodLuckPage">
+    <div class="hearts">💖💗💞</div>
+    <img src="teya.jpg" alt="Your Photo Together" class="photo" id="photo3">
+    <h1>Good Luck, MY CRY BABY!</h1>
+    <div class="goodluck">
+      You are going to rock your exam, love!<br>
+      Remember: I believe in you, and I know you can do anything you set your mind to.<br>
+      Go shine, Mahal! I’m always cheering for you. 
+    </div>
+    <div class="personal-message">
+       I know you're tired, but we can do this, love! I'm always proud of you. I got you, baby!
+       -HEADACHE
+    </div>
+    <button class="next-btn" id="backToStart">Back to Start</button>
+  </div>
+  <script>
+    // Page navigation
+    const landing = document.getElementById('landing');
+    const bouquet = document.getElementById('bouquet');
+    const startBtn = document.getElementById('startBtn');
+    const motivationalPage = document.getElementById('motivationalPage');
+    const amazingPage = document.getElementById('amazingPage');
+    const goodLuckPage = document.getElementById('goodLuckPage');
+    const toAmazing = document.getElementById('toAmazing');
+    const toGoodLuck = document.getElementById('toGoodLuck');
+    const backToStart = document.getElementById('backToStart');
+
+    startBtn.onclick = function () {
+      bouquet.classList.add('hide');
+      startBtn.disabled = true;
+      setTimeout(() => {
+        landing.style.display = 'none';
+        motivationalPage.classList.add('show');
+        startConfetti();
+      }, 1100);
+    };
+    toAmazing.onclick = function () {
+      motivationalPage.classList.remove('show');
+      amazingPage.classList.add('show');
+    };
+    toGoodLuck.onclick = function () {
+      amazingPage.classList.remove('show');
+      goodLuckPage.classList.add('show');
+    };
+    backToStart.onclick = function () {
+      goodLuckPage.classList.remove('show');
+      landing.style.display = 'flex';
+      bouquet.classList.remove('hide');
+      startBtn.disabled = false;
+    };
+
+    // Motivational quotes
+    const quotes = [
+      "“Success is not the key to happiness. Happiness is the key to success.” — Albert Schweitzer",
+      "“Believe you can and you’re halfway there.” — Theodore Roosevelt",
+      "“You are braver than you believe, stronger than you seem, and smarter than you think.” — A.A. Milne",
+      "“The future belongs to those who believe in the beauty of their dreams.” — Eleanor Roosevelt",
+      "“Doubt kills more dreams than failure ever will.” — Suzy Kassem",
+      "“You’ve got this, Noreene! Go show the world what you’re made of.”"
+    ];
+    let idx = 0;
+    const quoteBox = document.getElementById('quote-box');
+    function showQuote() {
+      quoteBox.textContent = quotes[idx % quotes.length];
+      idx++;
+    }
+    showQuote();
+    setInterval(showQuote, 3700);
+
+    // Confetti animation
+    const canvas = document.querySelector('.confetti');
+    const ctx = canvas.getContext('2d');
+    let W = window.innerWidth;
+    let H = window.innerHeight;
+    let particles = [];
+    let confettiActive = false;
+
+    function resizeCanvas() {
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W;
+      canvas.height = H;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function randomColor() {
+      const colors = ['#e75480','#ffb6c1','#f06292','#fff','#f8bbd0','#ff80ab'];
+      return colors[Math.floor(Math.random()*colors.length)];
+    }
+
+    function createParticles() {
+      particles = [];
+      for (let i = 0; i < 70; i++) {
+        particles.push({
+          x: Math.random()*W,
+          y: Math.random()*-H,
+          r: 6 + Math.random()*8,
+          d: Math.random()*W,
+          color: randomColor(),
+          tilt: Math.random()*10 - 10,
+          tiltAngle: Math.random()*Math.PI,
+          tiltAngleIncrement: (Math.random()*0.07) + .02
+        });
+      }
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, W, H);
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        ctx.beginPath();
+        ctx.lineWidth = p.r;
+        ctx.strokeStyle = p.color;
+        ctx.moveTo(p.x + p.tilt + p.r/3, p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r/3);
+        ctx.stroke();
+      }
+      updateParticles();
+    }
+
+    function updateParticles() {
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        p.y += (Math.cos(p.d) + 3 + p.r/2) / 2.8;
+        p.x += Math.sin(0.01 + p.d) * 1.1;
+        p.tiltAngle += p.tiltAngleIncrement;
+        p.tilt = Math.sin(p.tiltAngle) * 12;
+        if (p.y > H || p.x > W || p.x < 0) {
+          particles[i] = {
+            x: Math.random()*W,
+            y: -10,
+            r: 6 + Math.random()*8,
+            d: Math.random()*W,
+            color: randomColor(),
+            tilt: Math.random()*10 - 10,
+            tiltAngle: Math.random()*Math.PI,
+            tiltAngleIncrement: (Math.random()*0.07) + .02
+          };
+        }
+      }
+    }
+
+    function animateConfetti() {
+      if (confettiActive) {
+        drawParticles();
+        requestAnimationFrame(animateConfetti);
+      }
+    }
+
+    function startConfetti() {
+      createParticles();
+      confettiActive = true;
+      animateConfetti();
+    }
+
+    // Photo fallback (shows a sample if not replaced yet)
+    document.getElementById('photo1').onerror = function() {
+      this.src = "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=300&h=300";
+    };
+    document.getElementById('photo2').onerror = function() {
+      this.src = "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=300&h=300";
+    };
+    document.getElementById('photo3').onerror = function() {
+      this.src = "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=300&h=300";
+    };
+  </script>
+</body>
+</html>
